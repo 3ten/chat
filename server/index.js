@@ -5,7 +5,7 @@ const socketIO = require('socket.io');
 var tools = require('./mysql');
 
 const port = 3000;
-const hostname = '127.0.0.1';
+const hostname = '192.168.11.148';
 
 const app = express();
 
@@ -15,8 +15,12 @@ const io = socketIO(server);
 
 const publicPath = path.join(__dirname, '../public');
 
-io.on('connection', () => {
-    console.log('SocketIO is connected');
+io.on('connection', (socket) => {
+    socket.on('message', (message) => {
+        io.emit("message", message);
+        
+        console.log(message);
+    })
 });
 
 app.use(express.static(publicPath));

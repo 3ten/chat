@@ -9,11 +9,17 @@ var conn = mysql.createConnection({
     password: "1234"
 });
 
-conn.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    conn.query("SELECT * From users", function (err, result, fields) {
-        if (err) throw err;
 
-    });
-});
+function Message() {
+
+}
+var a = new Message();
+
+// conn.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     conn.query("SELECT * From users", function (err, result, fields) {
+//         if (err) throw err;
+
+//     });
+// });
