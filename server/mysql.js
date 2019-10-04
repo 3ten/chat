@@ -10,10 +10,10 @@ var conn = mysql.createConnection({
 });
 
 
-function Message() {
+// function Message() {
 
-}
-var a = new Message();
+// }
+// var a = new Message();
 
 // conn.connect(function(err) {
 //     if (err) throw err;

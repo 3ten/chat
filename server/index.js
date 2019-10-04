@@ -5,7 +5,7 @@ const socketIO = require('socket.io');
 var tools = require('./mysql');
 
 const port = 3000;
-const hostname = '192.168.11.148';
+const hostname = '192.168.0.2';
 
 const app = express();
 
