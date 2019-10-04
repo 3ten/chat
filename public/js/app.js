@@ -7,7 +7,7 @@ var app = new Vue({
     },
     methods: {
         sendMessage: function() {
-            socket.emit('message', this.message);
+            socket.emit('sendMessage', this.message);
             this.message = '';
         }
     },
@@ -15,7 +15,7 @@ var app = new Vue({
         socket = io();
     },
     mounted: function() {
-        socket.on('message', function(message){
+        socket.on('addMessage', function(message){
             app.messages.push(message);
         })
     }
