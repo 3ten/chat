@@ -26,12 +26,17 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xl-6 offset-xl-3">
+        <div id="chats" class="col-xl-2 offset-xl-2">
+            <div v-for="chat in chats">
+               <div v-on:click="click(chat.id)" class="chat">{{chat.id}}</div>
+            </div>
+        </div>
+        <div class="col-xl-4 ">
             <div id="app" class="col-xl-12">
                 <div class="row">
                     <div id="chat-box" class="col-xl-12">
                         <div v-for="message in messages">
-                            {{ message }}
+                             {{ message }}
                         </div>
                     </div>
                 </div>
@@ -54,5 +59,8 @@
 
 
 <script src="js/app.js"></script>
+<script>
+    let ClientHeight = document.documentElement.clientHeight;
+</script>
 </body>
 </html>

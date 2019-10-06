@@ -1,6 +1,14 @@
 #sendMessageBox{
     width: 100%;
+
 }
 #chat-box{
+    height: calc(100% - 50px);
     border: 1px black solid;
+}
+.chat{
+    border: 1px black solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
 }
