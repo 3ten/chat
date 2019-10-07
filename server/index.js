@@ -4,8 +4,8 @@ const path = require('path');
 const socketIO = require('socket.io');
 
 
-const port = 80;
-const hostname = '192.168.1.7';
+const port = 3001;
+const hostname = '192.168.11.11';
 
 const app = express();
 
@@ -28,7 +28,8 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('sendMessage', (message) => {
-        io.sockets.in(room).emit("addMessage", message);
+        let newMessages = {content: message, room: room};
+        io.sockets.in(room).emit("addMessage", newMessages);
         //console.log(message);
     });
     socket.on('disconnect', () => {

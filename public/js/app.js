@@ -1,7 +1,9 @@
 var socket = null;
+var room = 'obsh';
 var app = new Vue({
     el: "#app",
     data: {
+        room: room,
         message: '',
         messages: []
     },
@@ -33,7 +35,10 @@ var chats = new Vue({
     },
     methods: {
         click: function (el) {
-            socket.emit('create', el);
+            room = el;
+            app.room = el;
+            console.log(room);
+            socket.emit('create', room);
         }
     }
 });
