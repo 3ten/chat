@@ -16,11 +16,14 @@ var app = new Vue({
     created: function () {
         socket = io();
         socket.emit('create', 'obsh');
+        socket.on('getMessages', (message) => {
+            app.messages.push(message);
+        });
     },
     mounted: function () {
         socket.on('addMessage', function (message) {
             app.messages.push(message);
-        })
+        });
     }
 });
 
