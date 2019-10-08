@@ -31,13 +31,14 @@ var chats = new Vue({
             {id: 1},
             {id: 2}
         ],
-        chat: ''
+        chat: '',
+        currentRoom:room
     },
     methods: {
         click: function (el) {
             room = el;
-            app.room = el;
-            console.log(room);
+            app.room = room;
+            chats.currentRoom = room;
             socket.emit('create', room);
         }
     }

@@ -4,7 +4,7 @@ const path = require('path');
 const socketIO = require('socket.io');
 
 
-const port = 3001;
+const port = 3000;
 const hostname = '192.168.11.11';
 
 const app = express();
@@ -21,7 +21,7 @@ var connections = [];
 io.sockets.on('connection', (socket) => {
 
     let room;
-    socket.on('create', function (room_name) {
+    socket.on('create', (room_name) => {
         room = room_name;
         socket.join(room);
         connections.push(socket);
@@ -30,8 +30,8 @@ io.sockets.on('connection', (socket) => {
     socket.on('sendMessage', (message) => {
         let newMessages = {content: message, room: room};
         io.sockets.in(room).emit("addMessage", newMessages);
-        //console.log(message);
     });
+
     socket.on('disconnect', () => {
         connections.splice(socket, 1);
     });
