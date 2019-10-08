@@ -6,12 +6,7 @@ const socketIO = require('socket.io');
 const port = 3000;
 const hostname = '192.168.11.146';
 
-<<<<<<< HEAD
 const mysql_script = require('./mysql');
-=======
-const port = 3000;
-const hostname = '192.168.11.11';
->>>>>>> 76bf039b3858d21d6a073da57054c0d0c3e7918a
 
 const app = express();
 
@@ -59,11 +54,7 @@ io.sockets.on('connection', (socket) => {
         let newMessages = {content: message, room: room};
         io.sockets.in(room).emit("addMessage", newMessages);
     });
-<<<<<<< HEAD
     
-=======
-
->>>>>>> 76bf039b3858d21d6a073da57054c0d0c3e7918a
     socket.on('disconnect', () => {
         connections.splice(socket, 1);
     });
