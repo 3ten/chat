@@ -4,7 +4,7 @@ const path = require('path');
 const socketIO = require('socket.io');
 
 const port = 3000;
-const hostname = '192.168.11.146';
+const hostname = '192.168.11.11';
 
 const mysql_script = require('./mysql');
 
@@ -27,12 +27,11 @@ io.sockets.on('connection', (socket) => {
         socket.join(room);
         connections.push(socket);
 
-        console.log("it works!");
-        mysql_script.connection.query("SELECT content FROM messages WHERE chat_id=1", (err, results, fields) => {
+        mysql_script.connection.query("SELECT * FROM messages ", (err, results, fields) => {
             if (err) console.log(err);
             results.forEach(content => {
                 console.log(content);
-                let newMessages = {content: content, room: room};
+                let newMessages = {content: content.content, room: content.chat_id};
                 socket.emit("getMessages", newMessages);
             });
         });
@@ -45,7 +44,7 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('getChats', () => {
-        mysql_script.connection.query("select ct.name,ct.chat_id,ct.isPrivate from party pt inner join chats ct where pt.user_id = 1", (err, results, fields) => {
+        mysql_script.connection.query("select ct.name,ct.chat_id,ct.isPrivate from party pt left join chats ct on pt.chat_id=ct.chat_id where pt.user_id = 1", (err, results, fields) => {
             if (err) console.log(err);
             results.forEach(chat => {
                 let room = {id: chat.chat_id, name: chat.name};
@@ -55,20 +54,12 @@ io.sockets.on('connection', (socket) => {
         });
     });
 
-    // socket.on('connection', () => {
-    //     console.log("it works!");
-    //     connection.query("SELECT content FROM messages", (err, results, fields) => {
-    //         if (err) console.log(err);
-    //         results.forEach(content => {
-    //             console.log(content);
-    //             let newMessages = {content: content, room: room};
-    //             io.sockets.in(room).emit("getMessages", newMessages);
-    //         });
-    //     }); 
-    // });
 
     socket.on('sendMessage', (message) => {
         let newMessages = {content: message, room: room};
+        mysql_script.connection.query("insert into messages(chat_id,user_id,content,date) values("+room+","+"1,'"+message+"','2001-11-11 11:11:11')", (err) => {
+            if (err) console.log(err);
+            });
         io.sockets.in(room).emit("addMessage", newMessages);
     });
     

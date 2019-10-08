@@ -37,7 +37,7 @@
     <div class="row">
         <div id="chats" class="col-xl-2  offset-xl-2 col-4 offset-0 ">
             <div v-for="chat in chats" v-on:click="click(chat.id)" v-bind:class="{active: currentRoom  == chat.id }" class="chat">
-             {{chat.id}}
+             {{chat.name}}
             </div>
         </div>
 
