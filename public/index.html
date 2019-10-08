@@ -13,7 +13,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -21,22 +20,33 @@
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
 
+
+    <link href="fontawesome/css/all.css" rel="stylesheet">
+    <script defer src="fontawesome/js/all.js"></script>
+    <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="fontawesome/css/brands.css" rel="stylesheet">
+    <link href="fontawesome/css/solid.css" rel="stylesheet">
+    <script defer src="fontawesome/js/brands.js"></script>
+    <script defer src="fontawesome/js/solid.js"></script>
+    <script defer src="fontawesome/js/fontawesome.js"></script>
+
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div id="chats" class="col-xl-2 offset-xl-2">
-            <div v-for="chat in chats">
-               <div v-on:click="click(chat.id)" class="chat">{{chat.id}}</div>
+        <div id="chats" class="col-xl-2  offset-xl-2 col-4 offset-0 ">
+            <div v-for="chat in chats" v-on:click="click(chat.id)" v-bind:class="{active: currentRoom  == chat.id }" class="chat">
+             {{chat.id}}
             </div>
         </div>
-        <div class="col-xl-4 ">
+
+        <div class="col-xl-4 offset-xl-0 col-8">
             <div id="app" class="col-xl-12">
                 <div class="row">
                     <div id="chat-box" class="col-xl-12">
-                        <div v-for="message in messages">
-                            <div v-if="room === message.room">{{ message.content }}</div>
+                        <div v-for="message in messages" v-if="room === message.room">
+                          {{ message.content }}
                         </div>
                     </div>
                 </div>
@@ -44,10 +54,15 @@
                     <div class="col-xl-12">
                         <form v-on:submit.prevent="sendMessage">
                             <div class="row">
-                                <textarea name="" id="sendMessageBox" rows="10" v-model:value="message"></textarea>
+                                <div class="col-10 send MessageBox">
+                                    <textarea name="" class="form-control" id="sendMessageBox"  v-model:value="message"></textarea>
+                                </div>
+                                <div class="col-2 send Messagebtn">
+                                    <button type="submit" class="btn btn-primary">Отправить</button>
+                                </div>
                             </div>
                             <div class="row">
-                                <input type="submit">
+
                             </div>
                         </form>
                     </div>
@@ -60,7 +75,10 @@
 
 <script src="js/app.js"></script>
 <script>
-    let ClientHeight = document.documentElement.clientHeight;
+    let ClientHeight = document.documentElement.clientHeight,
+        ClientWidth = document.documentElement.clientWidth;
+    $('#chat-box').css('height', ClientHeight - 150);
+
 </script>
 </body>
 </html>
