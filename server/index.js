@@ -28,12 +28,29 @@ io.sockets.on('connection', (socket) => {
         connections.push(socket);
 
         console.log("it works!");
-        mysql_script.connection.query("SELECT content FROM messages", (err, results, fields) => {
+        mysql_script.connection.query("SELECT content FROM messages WHERE chat_id=1", (err, results, fields) => {
             if (err) console.log(err);
             results.forEach(content => {
                 console.log(content);
                 let newMessages = {content: content, room: room};
                 socket.emit("getMessages", newMessages);
+            });
+        });
+    });
+
+    socket.on('joinRoom', (room_name) => {
+        room = room_name;
+        socket.join(room);
+
+    });
+
+    socket.on('getChats', () => {
+        mysql_script.connection.query("select ct.name,ct.chat_id,ct.isPrivate from party pt inner join chats ct where pt.user_id = 1", (err, results, fields) => {
+            if (err) console.log(err);
+            results.forEach(chat => {
+                let room = {id: chat.chat_id, name: chat.name};
+                console.log(room);
+                socket.emit("sendChats", room);
             });
         });
     });
