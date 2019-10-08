@@ -1,5 +1,5 @@
 var socket = null;
-var room = 'obsh';
+var room = 1;
 var app = new Vue({
     el: "#app",
     data: {
@@ -15,7 +15,7 @@ var app = new Vue({
     },
     created: function () {
         socket = io();
-        socket.emit('create', 'obsh');
+        socket.emit('create', room);
         socket.on('getMessages', (message) => {
             app.messages.push(message);
         });
@@ -30,10 +30,7 @@ var app = new Vue({
 var chats = new Vue({
     el: '#chats',
     data: {
-        chats: [
-            {id: 1},
-            {id: 2}
-        ],
+        chats: [],
         chat: '',
         currentRoom:room
     },
@@ -42,8 +39,14 @@ var chats = new Vue({
             room = el;
             app.room = room;
             chats.currentRoom = room;
-            socket.emit('create', room);
+            socket.emit('joinRoom', room);
         }
+    },
+    created: function() {
+        socket.emit('getChats');
+        socket.on('sendChats', (room) => {
+            chats.chats.push(room);
+        });
     }
 });
 
